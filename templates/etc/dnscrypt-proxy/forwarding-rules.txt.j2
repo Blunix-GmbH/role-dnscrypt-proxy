@@ -1,0 +1,3 @@
+{% for key in dnscrypt_config_forwarding_rules | sort %}
+{{ key }} {{ dnscrypt_config_forwarding_rules[key] }}
+{% endfor %}

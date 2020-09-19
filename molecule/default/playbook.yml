@@ -1,0 +1,23 @@
+- name: Converge
+  hosts: all
+  roles:
+    - role: role-dnscrypt-proxy
+  vars:
+
+    # Listen addresses
+    dnscrypt_config_listen_addresses:
+      # First one always has to be localhost!
+      # It is used in /etc/resolv.conf on the dnscrypt-proxy host (with chattr +i)
+      - 127.0.0.1:53
+      #- "{{ tinc_ip }}"
+      #- "{{ openvpn_ip }}"
+
+    # Use another resolver for specific domains
+    dnscrypt_config_forwarding_rules:
+      lan: 192.168.178.1,192.168.1.1
+
+    # Cloaking rules - in our case announcing the internal network names
+    dnscrypt_config_cloaking_rules:
+      - localhost: 127.0.0.1
+      - localhost: ::1
+      - gateway: 172.16.0.5

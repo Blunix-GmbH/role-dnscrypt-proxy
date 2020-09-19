@@ -1,0 +1,38 @@
+- name: install dnscrypt-proxy
+  apt:
+    name: dnscrypt-proxy
+    state: present
+
+- name: template dnscrypt config files
+  template:
+    src: "templates/etc/dnscrypt-proxy/{{ dnscrypt_proxy_config_file_name }}.j2"
+    dest: "/etc/dnscrypt-proxy/{{ dnscrypt_proxy_config_file_name }}"
+    owner: _dnscrypt-proxy
+    group: nogroup
+    mode: 0640
+  with_items:
+    - dnscrypt-proxy.toml
+    - cloaking-rules.txt
+    - forwarding-rules.txt
+  loop_control:
+    loop_var: dnscrypt_proxy_config_file_name
+  notify: restart dnscrypt-proxy
+
+- name: remove dnscrypt-proxy.socket file
+  file:
+    path: /lib/systemd/system/dnscrypt-proxy.socket
+    state: absent
+  notify:
+    - reload systemd daemon
+    - restart dnscrypt-proxy
+
+- name: patch dnscrypt-proxy.service
+  template:
+    src: templates/lib/systemd/system/dnscrypt-proxy.service.j2
+    dest: /lib/systemd/system/dnscrypt-proxy.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reload systemd daemon
+    - restart dnscrypt-proxy

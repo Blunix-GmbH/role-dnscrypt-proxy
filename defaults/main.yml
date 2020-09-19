@@ -1,0 +1,32 @@
+# German servers with dnssec
+# https://dnscrypt.info/public-servers/
+dnscrypt_config_server_names:
+  - doh-de-blahdns
+  - dnscrypt-de-blahdns-ipv4
+  - dnscrypt.one
+  - dnsforge.de
+  - cs-de
+
+# Increase privacy
+dnscrypt_config_dnscrypt_ephemeral_keys: 'true'
+dnscrypt_config_tls_disable_session_tickets: 'true'
+
+
+
+# Listen addresses
+dnscrypt_config_listen_addresses:
+  - 127.0.0.1:53
+
+# Use another resolver for specific domains
+dnscrypt_config_forwarding_rules: {}
+
+# Cloaking rules, used for announcing the internal network names
+# The role will iterate groups['all'] to generate all internally used names and their respective wireguard IPs
+dnscrypt_config_cloaking_rules_ip_variable_name: "nic_wg_mesh_ip"
+dnscrypt_config_cloaking_rules_aliases_variable_name: "wg_mesh_aliases"
+dnscrypt_config_cloaking_rules_domains:
+  - "{{ internal_private_domain }}"
+  - "{{ internal_public_domain }}"
+# Additional custom domain name
+dnscrypt_config_cloaking_rules: []
+  #- google.com: 0.0.0.0
