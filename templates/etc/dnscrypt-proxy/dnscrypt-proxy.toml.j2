@@ -207,10 +207,11 @@ tls_disable_session_tickets = true
 ##
 ## If more than one resolver is specified, they will be tried in sequence.
 
-fallback_resolvers = ['9.9.9.9:53', '8.8.8.8:53']
+fallback_resolvers = [{{ "\'" + dnscrypt_config_fallback_resolvers | join(":53\', \'") + ":53\'" }}]
 
 
-## Always use the fallback resolver before the system DNS settings.
+## Never let dnscrypt-proxy try to use the system DNS settings;
+## unconditionally use the fallback resolver.
 
 ignore_system_dns = true
 
@@ -233,7 +234,7 @@ netprobe_timeout = 60
 ## On other operating systems, the connection will be initialized
 ## but nothing will be sent at all.
 
-netprobe_address = '9.9.9.9:53'
+netprobe_address = '{{ dnscrypt_config_fallback_resolvers[0] }}:53'
 
 
 ## Offline mode - Do not use any remote encrypted servers.
