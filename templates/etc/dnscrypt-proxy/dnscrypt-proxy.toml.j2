@@ -207,12 +207,12 @@ tls_disable_session_tickets = true
 ##
 ## If more than one resolver is specified, they will be tried in sequence.
 
-fallback_resolvers = ['9.9.9.9:53', '8.8.8.8:53']
+fallback_resolvers = [{{ "\'" + dnscrypt_config_fallback_resolvers | join(":53\', \'") + ":53\'" }}]
 
 
 ## Always use the fallback resolver before the system DNS settings.
 
-ignore_system_dns = true
+netprobe_address = '{{ dnscrypt_config_fallback_resolvers[0] }}:53'
 
 
 ## Maximum time (in seconds) to wait for network connectivity before

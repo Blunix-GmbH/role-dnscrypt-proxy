@@ -30,3 +30,8 @@ dnscrypt_config_cloaking_rules_domains:
 # Additional custom domain name
 dnscrypt_config_cloaking_rules: []
   #- google.com: 0.0.0.0
+
+
+dnscrypt_config_fallback_resolvers:
+  - 8.8.4.4
+  - 9.9.9.9
