@@ -5,22 +5,22 @@ localhost 127.0.0.1
 localhost.{{ internal_private_domain }} 127.0.0.1
 localhost.{{ internal_public_domain }} 127.0.0.1
 
-{% for dnscrypt_proxy_cloaking_rule_host in groups['all'] %}
+{% for dnscrypt_proxy_cloaking_rule_host in groups['all'] | sort %}
 {{ dnscrypt_proxy_cloaking_rule_host }} {{ hostvars[dnscrypt_proxy_cloaking_rule_host][dnscrypt_config_cloaking_rules_ip_variable_name] }}
-{% for dnscrypt_config_cloaking_rules_domain in dnscrypt_config_cloaking_rules_domains %}
+{% for dnscrypt_config_cloaking_rules_domain in dnscrypt_config_cloaking_rules_domains | sort %}
 {{ dnscrypt_proxy_cloaking_rule_host }}.{{ dnscrypt_config_cloaking_rules_domain }} {{ hostvars[dnscrypt_proxy_cloaking_rule_host][dnscrypt_config_cloaking_rules_ip_variable_name] }}
 {% endfor %}
-{% for dnscrypt_proxy_cloaking_rule_host_alias in hostvars[dnscrypt_proxy_cloaking_rule_host][dnscrypt_config_cloaking_rules_aliases_variable_name] %}
+{% for dnscrypt_proxy_cloaking_rule_host_alias in hostvars[dnscrypt_proxy_cloaking_rule_host][dnscrypt_config_cloaking_rules_aliases_variable_name] | sort %}
 {{ dnscrypt_proxy_cloaking_rule_host_alias }} {{ hostvars[dnscrypt_proxy_cloaking_rule_host][dnscrypt_config_cloaking_rules_ip_variable_name] }}
-{% for dnscrypt_config_cloaking_rules_domain in dnscrypt_config_cloaking_rules_domains %}
+{% for dnscrypt_config_cloaking_rules_domain in dnscrypt_config_cloaking_rules_domains | sort %}
 {{ dnscrypt_proxy_cloaking_rule_host_alias }}.{{ dnscrypt_config_cloaking_rules_domain }} {{ hostvars[dnscrypt_proxy_cloaking_rule_host][dnscrypt_config_cloaking_rules_ip_variable_name] }}
 {% endfor %}
 {% endfor %}
 
 {% endfor %}
 
-{% for dnscrypt_config_cloaking_rules_list_item in dnscrypt_config_cloaking_rules %}
-{% for dnscrypt_config_cloaking_rule_key in dnscrypt_config_cloaking_rules_list_item %}
+{% for dnscrypt_config_cloaking_rules_list_item in dnscrypt_config_cloaking_rules | sort %}
+{% for dnscrypt_config_cloaking_rule_key in dnscrypt_config_cloaking_rules_list_item | sort %}
 {{ dnscrypt_config_cloaking_rule_key }} {{ dnscrypt_config_cloaking_rules_list_item[dnscrypt_config_cloaking_rule_key] }}
 {% endfor %}
 {% endfor %}
