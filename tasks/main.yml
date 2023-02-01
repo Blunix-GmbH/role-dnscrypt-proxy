@@ -18,6 +18,14 @@
     loop_var: dnscrypt_proxy_config_file_name
   notify: restart dnscrypt-proxy
 
+- name: fix permissions for /etc/dnscrypt-proxy
+  file:
+    state: directory
+    path: /etc/dnscrypt-proxy
+    owner: _dnscrypt-proxy
+    group: nogroup
+    mode: 0750
+
 - name: remove dnscrypt-proxy.socket file
   file:
     path: /lib/systemd/system/dnscrypt-proxy.socket
