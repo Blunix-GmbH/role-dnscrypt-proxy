@@ -27,7 +27,10 @@
 ##
 ## Remove the leading # first to enable this; lines starting with # are ignored.
 
-server_names = {{ dnscrypt_config_server_names }}
+
+# NOTE
+# Uncommenting this increases privacy, but seems to reduce reliability. Those are the only german servers I found that looked trustworthy.
+# server_names = {{ dnscrypt_config_server_names }}
 
 
 ## List of local addresses and ports to listen to. Can be IPv4 and/or IPv6.
